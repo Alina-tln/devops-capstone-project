@@ -124,6 +124,15 @@ class TestAccountService(TestCase):
         self.assertEqual(response.status_code, status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
 
     # ADD YOUR TEST CASES HERE ...
+
+    def test_list_account(self):
+        """It should List a All Accounts"""
+        self._create_accounts(5)
+        resp = self.client.get(BASE_URL)
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        data = resp.get_json()
+        self.assertEqual(len(data), 5)
+
     def test_read_an_account(self):
         """It should Read a single Account"""
         account = self._create_accounts(1)[0]
@@ -141,3 +150,4 @@ class TestAccountService(TestCase):
 
     
     
+
