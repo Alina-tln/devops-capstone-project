@@ -163,7 +163,7 @@ class TestAccountService(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         updated_account = response.get_json()
         self.assertEqual(updated_account["name"], "Something Known")
-    
+
     def test_update_account_not_found(self):
         """It should return 404 if account to update is not found"""
         fake_account = AccountFactory()
@@ -177,12 +177,12 @@ class TestAccountService(TestCase):
         account = self._create_accounts(1)[0]
         response = self.client.delete(f"{BASE_URL}/{account.id}")
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-    
+
     def test_method_not_allowed(self):
         """It should not allow an illegal method call"""
         response = self.client.delete(BASE_URL)
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
-    
+
     def test_security_headers(self):
         """It should return security headers"""
         response = self.client.get('/', environ_overrides=HTTPS_ENVIRON)
@@ -201,4 +201,3 @@ class TestAccountService(TestCase):
         response = self.client.get('/', environ_overrides=HTTPS_ENVIRON)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.headers.get('Access-Control-Allow-Origin'), '*')
-
