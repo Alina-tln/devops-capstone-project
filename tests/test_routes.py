@@ -163,6 +163,14 @@ class TestAccountService(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         updated_account = response.get_json()
         self.assertEqual(updated_account["name"], "Something Known")
+    
+    def test_update_account_not_found(self):
+        """It should return 404 if account to update is not found"""
+        fake_account = AccountFactory()
+        fake_data = fake_account.serialize()
+        fake_data["name"] = "Ghost Account"
+        response = self.client.put(f"{BASE_URL}/9999", json=fake_data)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_delete_accounts(self):
         """It should Delete an Account"""
